@@ -5,7 +5,7 @@ $h=getenv('MYSQLHOST')?:'localhost'; $p=getenv('MYSQLPORT')?:'3306';
 $n=getenv('MYSQLDATABASE')?:'rede'; $u=getenv('MYSQLUSER')?:'root'; $w=getenv('MYSQLPASSWORD')?:'';
 try {
   $db=new PDO("mysql:host=$h;port=$p;dbname=$n;charset=utf8mb4",$u,$w,[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);
-} catch (Exception $e) { http_response_code(500); exit('Erro de conexão com o banco.'); }
+} catch (Exception $e) { http_response_code(500); exit('Erro: '.$e->getMessage()); }
 if(!$db->query("SHOW TABLES LIKE 'users'")->fetch()){
   foreach([
    "CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL, pass VARCHAR(255) NOT NULL, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)",
